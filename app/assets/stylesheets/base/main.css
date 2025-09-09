@@ -1,68 +1,67 @@
 :root {
-  --main--bg:#FBFBFC;
-  --chip--bg:#0E0E0F;
-  --text-color:#333133;
-  --primary1-color:#EDF7FB;
-  --primary2-color:#D0ECF9;
-  --primary3-color:#B4E0F2;
-  --primary4-color:#7DCFF2;
-  --primary5-color:#3AB0E3;
-  --primary6-color:#2993C1;
-  --primary7-color:#0A719D;
-  --secondary1--color:#F4F4F5;
-  --secondary2--color:#E0DFE0;
-  --secondary3--color:#DAD7DA;
-  --secondary4--color:#BEBBBE;
-  --secondary5--color:#AEABAE;
-  --secondary6--color:#5B575B;
-  --secondary7--color:#403C40;
-  --secondary8--color:#302C30;
-  --accent-red3-color:#F7E9E9;
-  --accent-red5-color:#D83237;
-  --accent-yg5-color:#5FCF36;
-  --accent-y3-color:#F6EFD7;
-  --accent-y5-color:#E3BA3A;
+  /* Base */
+  --color-bg-main: #FBFBFC;
+  --color-bg-chip: #0E0E0F;
+  --color-text: #333133;
+
+  /* Primary scale */
+  --color-primary-1: #EDF7FB;
+  --color-primary-2: #D0ECF9;
+  --color-primary-3: #B4E0F2;
+  --color-primary-4: #7DCFF2;
+  --color-primary-5: #3AB0E3;
+  --color-primary-6: #2993C1;
+  --color-primary-7: #0A719D;
+
+  /* Secondary scale */
+  --color-secondary-1: #F4F4F5;
+  --color-secondary-2: #E0DFE0;
+  --color-secondary-3: #DAD7DA;
+  --color-secondary-4: #BEBBBE;
+  --color-secondary-5: #AEABAE;
+  --color-secondary-6: #5B575B;
+  --color-secondary-7: #403C40;
+  --color-secondary-8: #302C30;
+
+  /* Accent */
+  --color-accent-red-3: #F7E9E9;
+  --color-accent-red-5: #D83237;
+  --color-accent-green-5: #5FCF36;
+  --color-accent-yellow-3: #F6EFD7;
+  --color-accent-yellow-5: #E3BA3A;
 }
 
+/* ------------------------
+   Base
+------------------------- */
 body {
   font-family: "Noto Sans JP", sans-serif;
-  color: var(--text-color);
+  color: var(--color-text);
   user-select: none;
 }
 
 select {
   appearance: auto;
-  -webkit-appearance: auto;
-  -moz-appearance: auto;
-
   padding: 4px 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: white;
+  background-color: #fff;
   cursor: pointer;
   min-width: 60px;
 }
 
-
-/* ---------------------------------------------------------
-　モーダル
-　　scheduler/_modal_projects.html.erb
-　　manager/users/_modal_new_html/erb
------------------------------------------------------------ */
-
-/* モーダル背景 */
+/* ------------------------
+   Modal
+------------------------- */
 .modal {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  inset: 0; /* top:0; left:0; width:100vw; height:100vh; の短縮 */
   background: rgba(0,0,0,0.1);
   display: flex; align-items: center; justify-content: center;
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease-out, visibility 0s linear 0.2s;
-  transform: none !important;
-  will-change: auto !important;
 }
 .modal.open {
   opacity: 1;
@@ -70,97 +69,78 @@ select {
   transition-delay: 0s;
 }
 
-/* モーダルの中身 */
 .modal-content {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
+  position: fixed;
+  top: 50%; left: 50%;
   width: 90%; max-width: 360px;
   height: 600px;
   padding: 60px 40px 30px;
   box-shadow: 0 0 10px 2px rgba(0,0,0,0.15);
   border-radius: 8px;
-  background-color: #fff;
+  background: #fff;
+  transform: translate(-50%, -50%) translateY(20px);
   transition: transform 0.25s ease-out, opacity 0.25s ease-out;
-  transform: translate(-50%, -50%) translateY(20px) !important;
   opacity: 0;
-  z-index: 1001 !important;
-  margin: 0 !important;
+  z-index: 1001;
 }
-/* 下からにゅっと現われる */
 .modal.open .modal-content {
-  transform: translate(-50%, -50%) translateY(0) !important;
+  transform: translate(-50%, -50%) translateY(0);
   opacity: 1;
 }
-/* 閉じるボタン */
+
 .modal-close {
-  display: block;
   position: absolute;
   top: 40px; right: 40px;
 }
-.modal-close img {
-  width: 15px;
-}
+.modal-close img { width: 15px; }
 
-
-/* ------------------------------------------
-button
--------------------------------------------- */
-
-.btn--primary {
+/* ------------------------
+   Buttons
+------------------------- */
+.btn {
   display: inline-flex;
   align-items: center;
-  min-width: 140px;
-  padding: 12px 24px;
   border-radius: 6px;
-  background-color: var(--primary5-color);
-  box-shadow:0 1px 3px rgba(0,0,0,0.1);
-  font-weight: 500;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.btn--primary:hover {
-  background-color: #65d1fc;
-  transform: scale(1.05);
-}
-
-.btn--secondary {
-  display: inline-flex;
-  padding: 8px 12px;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 0.9rem;
   cursor: pointer;
   transition: 0.3s ease;
+}
+.btn--primary {
+  min-width: 140px;
+  padding: 12px 24px;
+  background: var(--color-primary-5);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  font-weight: 500;
+  color: #fff;
+}
+.btn--primary:hover {
+  background: #65d1fc;
+  transform: scale(1.05);
+}
+.btn--secondary {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  background: #fff;
+  border: 1px solid #e0e0e0;
 }
 .btn--secondary:hover {
   transform: scale(1.05);
 }
 
-
-/* ------------------------------------------
-スクロールバーの色を薄く
--------------------------------------------- */
-
-/* Chrome/Safari など WebKit 系 */
+/* ------------------------
+  Scrollbar
+------------------------- */
 .confirmed-shifts__table-wrapper::-webkit-scrollbar {
   height: 10px;
 }
-
 .confirmed-shifts__table-wrapper::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(0,0,0,0.03);
 }
-
 .confirmed-shifts__table-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.08);
+  background: rgba(0,0,0,0.08);
   border-radius: 4px;
 }
-
 /* Firefox */
 .confirmed-shifts__table-wrapper {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.08) rgba(0,0,0,0.03);   /* thumb と track */
+  scrollbar-color: rgba(0,0,0,0.08) rgba(0,0,0,0.03);
 }

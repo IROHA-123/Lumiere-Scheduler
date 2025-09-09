@@ -1,86 +1,41 @@
 Rails.application.routes.draw do
+  # Devise
+  devise_for :users, skip: [:registrations]
 
-  # Deviseログイン
-  devise_for :users, skip: [:registrations]  # 新規登録を無効化
-  
-  # 認証済みユーザーの root
+  # Root
   authenticated :user do
-    root to: "scheduler/shift_requests#index", as: :authenticated_root
+    root "scheduler/shift_requests#index", as: :authenticated_root
   end
-
-  # 未認証ユーザーの root
-  devise_scope :user do
-    unauthenticated do
-      root to: "devise/sessions#new", as: :unauthenticated_root
-    end
+  unauthenticated :user do
+    root "devise/sessions#new", as: :unauthenticated_root
   end
-
-  # ------------------------------------------------------------------
 
   # スタッフ画面（Shift Scheduler）
   namespace :scheduler do
     resources :shift_requests, only: [:index, :create] do
       collection do
-        get :modal        # Ajax用のモーダル取得
-        get :my_shifts
+        get :modal, :my_shifts
       end
     end
-  end 
+  end
 
-  # ------------------------------------------------------------------
-  
   # 管理者画面（Shift Manager）
   namespace :manager do
-  # ──────────────────────────────────────
-  # 1. 案件割当一覧 
-  #   - GET /manager/assignments
-  #   - 一覧画面を表示するだけのルート
-  # ──────────────────────────────────────
-  resources :assignments, only: [:index] do
-    collection do
-      # 配置メンバーを更新するアクション
-      patch :update_members
+    resources :assignments, only: [:index] do
+      patch :update_members, on: :collection
     end
-  end
 
-  # ──────────────────────────────────────
-  # 2. 確定シフト一覧＆更新 (ConfirmationsController)
-  #    - パスだけ confirmed にマッピング
-  #    - URL: /manager/confirmed
-  # ──────────────────────────────────────
-  resources :confirmations,
-            path:       'confirmed',
-            controller: 'confirmed',
-            only:       [:index, :update] do
-    collection do
-      get :download
+    resources :confirmations, path: "confirmed", controller: "confirmed", only: [:index, :update] do
+      get :download, on: :collection
     end
-  end
 
-  # ──────────────────────────────────────
-  # 3. その他 CRUD（ProjectsController & UsersController）
-  #    Projects: index, new, create, update ＋
-  #      - 個別割当画面 (assignment)
-  #      - 完了処理        (complete_assignment)
-  #    Users   : index, new, create, update
-  # ──────────────────────────────────────
-  resources :projects, only: [:index, :new, :create, :update] do
-    member do
-      # GET  /manager/projects/:id/assignment
-      # → Manager::ProjectsController#assignment
-      get   :assignment
-
-      # PATCH /manager/projects/:id/complete_assignment
-      # → Manager::ProjectsController#complete_assignment
-      patch :complete_assignment
-      # クリックで確定⇔希望を切り替える
-      patch :toggle_request
+    resources :projects, only: [:index, :new, :create, :update] do
+      member do
+        get   :assignment
+        patch :complete_assignment, :toggle_request
+      end
     end
+
+    resources :users, only: [:index, :new, :create, :edit, :update]
   end
-
-  resources :users, only: [:index, :new, :create,:edit, :update]
-end
-
-
-
 end

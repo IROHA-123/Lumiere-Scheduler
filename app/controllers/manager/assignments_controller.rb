@@ -1,51 +1,24 @@
 class Manager::AssignmentsController < Manager::BaseController
+  before_action :set_period, only: :index
 
   # ────────────────────────────────────
   # 割り当て一覧画面
   # GET /manager/assignments
   # ────────────────────────────────────
   def index
-    # 1 表示期間を取得（デフォルトは今月）
-    period = params[:period] || Time.zone.today.strftime("%Y%m")
-    @start_date = Date.strptime(period, "%Y%m").beginning_of_month
-    @end_date   = @start_date.end_of_month
-
-    # 2 前月・翌月の period を計算（画面右上のリンク用）
-    @prev_period = (@start_date - 1.month).strftime("%Y%m")
-    @next_period = (@start_date + 1.month).strftime("%Y%m")
-
-    # 3 表示期間内の案件のみ取得（N+1対策あり）
-    @projects = Project
-      .includes(:shift_assignments)
-      .where(work_date: @start_date..@end_date)  # ← これがポイント！
-      .order(work_date: :asc)
-
-    # 4 プルダウン用のユーザー一覧（名前とID）
-    @users = User.order(:name).pluck(:name, :id)
-
-    # 5 必要人数の最大値（表の列数を決めるため）
-    @max_slots = @projects.map(&:required_number).max || 0
+    @projects   = Project.within(@start_date, @end_date)
+    @users      = User.order(:name).pluck(:name, :id)
+    @max_slots  = @projects.map(&:required_number).max || 0
   end
 
   # ────────────────────────────────────
-  # 個別編集画面：チップで選んだメンバーをまとめて保存する
-  # PATCH manager/projects/id/assignment
+  # メンバー割り当て更新
+  # PATCH /manager/assignments/update_members
   # ────────────────────────────────────
   def update_members
-    assignments_params.each do |project_id, user_ids|
-      project = Project.find(project_id)
-
-      # トランザクションで安全に置き換え
-      Project.transaction do
-        # まず古い割り当てをクリア
-        project.shift_assignments.destroy_all
-        project.shift_requests.destroy_all
-
-
-        # 空文字を除き、重複を取り除いてから再作成
-        user_ids.reject(&:blank?).uniq.each do |uid|
-          project.shift_assignments.create!(user_id: uid)
-        end
+    Project.transaction do
+      assignments_params.each do |project_id, user_ids|
+        Project.find(project_id).update_assignments(user_ids)
       end
     end
 
@@ -54,9 +27,16 @@ class Manager::AssignmentsController < Manager::BaseController
 
   private
 
-  # ストロングパラメータで :assignments キーを許可
+  def set_period
+    period      = params[:period] || Time.zone.today.strftime("%Y%m")
+    @start_date = Date.strptime(period, "%Y%m").beginning_of_month
+    @end_date   = @start_date.end_of_month
+    @prev_period = (@start_date - 1.month).strftime("%Y%m")
+    @next_period = (@start_date + 1.month).strftime("%Y%m")
+  end
+
   # 内部は { "project_id" => [user_id, ...], ... } のハッシュ
   def assignments_params
-    params.require(:assignments).permit!
+    params.require(:assignments).to_h
   end
 end
