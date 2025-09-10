@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.4
+          bundler-cache: true
+      - run: ruby -v
+      - run: 'ruby -v | grep "ruby 3\.4\.4"'
+      - run: bundle env
+      - run: bundle install --jobs 4 --retry 3
+      - run: |
+          if [ -d spec ]; then
+            bundle exec rspec
+          else
+            bundle exec rake test
+          fi
