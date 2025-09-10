@@ -17,7 +17,7 @@ class Manager::UsersController < Manager::BaseController
     @user = User.new(user_params.merge(
       password:              random_pw,
       password_confirmation: random_pw,
-      skill_level: 0
+      skill_level:           user_params[:skill_level].to_i
     ))
 
     if @user.save
