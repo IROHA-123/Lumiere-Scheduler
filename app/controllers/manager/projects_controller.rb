@@ -40,6 +40,21 @@ class Manager::ProjectsController < Manager::BaseController
   end
 
   # ────────────────────────────────────
+  # PATCH /manager/projects/:id/complete_assignment
+  # 指定ユーザーを確定する
+  def complete_assignment
+    @project = Project.find(params[:id])
+    user_id  = params.require(:user_id).to_i
+
+    # 既存の希望・確定レコードを削除してから確定を作成
+    @project.shift_requests.where(user_id: user_id).destroy_all
+    @project.shift_assignments.where(user_id: user_id).destroy_all
+    @project.shift_assignments.create!(user_id: user_id)
+
+    redirect_to assignment_manager_project_path(@project), notice: "スタッフを確定しました"
+  end
+
+  # ────────────────────────────────────
   # PATCH /manager/projects/:id/toggle_request
   # 確定⇔希望 を切り替える Ajax/HTML ハンドラ
   def toggle_request

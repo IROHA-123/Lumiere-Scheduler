@@ -68,12 +68,10 @@
       </div>
       <div class="panel__body assignment-list">
         <% @shift_requests.each do |req| %>
-          <button type="button"
-                  class="chip level-<%= req.user.skill_level %>"
-                  data-action="click->toggle-user#toggle"
-                  data-toggle-user-user-id-value="<%= req.user.id %>">
-            <%= req.user.name %>
-          </button>
+          <%= link_to req.user.name,
+                      complete_assignment_manager_project_path(@project, user_id: req.user.id),
+                      data: { turbo_method: :patch },
+                      class: "chip level-#{req.user.skill_level}" %>
         <% end %>
       </div>
     </div>
