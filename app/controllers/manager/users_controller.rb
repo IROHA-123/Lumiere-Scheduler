@@ -1,8 +1,4 @@
-class Manager::UsersController < ApplicationController
-  layout "manager"
-
-  before_action :authenticate_user!
-  before_action :authorize_admin!
+class Manager::UsersController < Manager::BaseController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   # GET /manager/users
@@ -68,10 +64,6 @@ class Manager::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
-  end
-
-  def authorize_admin!
-    redirect_to(root_path, alert: "管理者権限が必要です") unless current_user.admin?
   end
 
   def generate_random_password
