@@ -10,6 +10,5 @@ class User < ApplicationRecord
 
   has_many :shift_requests
   has_many :shift_assignments
-  
 
 end
