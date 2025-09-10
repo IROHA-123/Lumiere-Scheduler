@@ -3,9 +3,9 @@
 one:
   title: MyString
   work_date: 2025-05-03
-  required_workers: 1
+  required_number: 1
 
 two:
   title: MyString
   work_date: 2025-05-03
-  required_workers: 1
+  required_number: 1
