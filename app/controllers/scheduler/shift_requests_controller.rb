@@ -56,13 +56,17 @@ class Scheduler::ShiftRequestsController < ApplicationController
 
   # -- シフト希望送信-------------------------------------------------
   def create
-    shift_request_params = params.require(:shift_request).permit(:project_id, :status)
-    shift_request = current_user.shift_requests.find_or_initialize_by(shift_request_params)
+    attrs = params.require(:shift_request).permit(:project_id, :status)
 
-    if shift_request.save
-      redirect_to scheduler_shift_requests_path, notice: "希望を送信しました"
-    else
-      redirect_to scheduler_shift_requests_path, alert: "エラーが発生しました"
-    end
+    sr = current_user.shift_requests.find_or_initialize_by(project_id: attrs[:project_id])
+    sr.assign_attributes(status: attrs[:status])
+
+    sr.save!
+    redirect_to scheduler_shift_requests_path, notice: "希望を送信しました"
+  rescue ActiveRecord::RecordNotUnique
+    redirect_to scheduler_shift_requests_path, notice: "既に希望を受け付けています"
+  rescue ActiveRecord::RecordInvalid
+    redirect_to scheduler_shift_requests_path, alert: sr.errors.full_messages.to_sentence
   end
+
 end
