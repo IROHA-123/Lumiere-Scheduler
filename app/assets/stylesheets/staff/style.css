@@ -46,6 +46,13 @@
   border-bottom: solid 3px var(--color-primary-7);
 }
 
+.app-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #45454a;
+  letter-spacing: 0.3px;
+  margin: 12px 24px;
+}
 
 
 /* body ------------------------------------------ */
@@ -90,7 +97,7 @@
 　calender
 ------------------------------------------------- */
 .calendar-container {
-  background-color: #fffdf7;
+  background-color: #f6f9fa;
   padding: 1.5rem;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -130,9 +137,8 @@
 }
 
 /* The whole cell becomes highlighted for today */
-.day-box.today {
+.calendar-cell .day-box.today {
   background: #f5faff;
-  border-radius: 10px;
   box-shadow: 0 0 0 1px rgba(59,130,246,0.15) inset;
 }
 
@@ -147,8 +153,10 @@
   opacity: 0.4;
 }
 
+
 /* optional: hover affordance */
 .calendar-cell .day-box {
+  background: white;
   transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.02s;
 }
 
