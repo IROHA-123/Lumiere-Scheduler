@@ -1,4 +1,4 @@
-<!--managerとschedulerすべてに共通-->
+<!--managerとstaffすべてに共通-->
 
 <!DOCTYPE html>
 <head>
@@ -15,10 +15,10 @@
   <!-- 共通CSS -->
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-  <!-- 名前空間ごとのCSS（manager / scheduler） -->
+  <!-- 名前空間ごとのCSS（manager / staff） -->
   <% if controller.controller_path.start_with?("manager") %>
     <%= stylesheet_link_tag "manager/base", "data-turbo-track": "reload" %>
-  <% elsif controller.controller_path.start_with?("scheduler") %>
+  <% elsif controller.controller_path.start_with?("staff") %>
     <%= stylesheet_link_tag "scheduler/base", "data-turbo-track": "reload" %>
   <% end %>
 

@@ -26,7 +26,7 @@
   
   <!-- OK／NG ボタン -->
   <div class="form-shift">
-    <%= form_with url: scheduler_shift_requests_path, method: :post, local: true do |f| %>
+    <%= form_with url: staff_shift_requests_path, method: :post, local: true do |f| %>
       <p class="actions-title">あなたのシフト希望</p>
       <%= f.hidden_field :project_id, value: project.id %>
       <div class="actions-buttons">
