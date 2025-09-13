@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # root は devise_scope で囲む
   devise_scope :user do
     authenticated :user do
-      root "scheduler/shift_requests#index", as: :authenticated_root
+      root "staff/shift_requests#index", as: :authenticated_root
     end
 
     unauthenticated do
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   # スタッフ画面（Shift Scheduler）
-  namespace :scheduler do
+  namespace :staff do
     resources :shift_requests, only: [:index, :create] do
       collection do
         get :modal, :my_shifts
