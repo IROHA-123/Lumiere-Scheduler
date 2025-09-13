@@ -48,14 +48,14 @@
   width: 150px;
   height: 40px;
   border-radius: 10px;
-  background-color: var(--primary5-color);
+  background-color: var(--color-primary-5);
   
   text-align: center;
   line-height: 30px;
   color: #ffffff;
 }
 .submit:hover {
-  background-color: var(--primary6-color);
+  background-color: var(--color-primary-6);
   transition: .3s;
 }
 /* -------------------------checkbox-------------------------- */
