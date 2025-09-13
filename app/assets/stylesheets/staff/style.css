@@ -117,22 +117,36 @@
 }
 .day-box p {
   margin-bottom: 3px;
-  height: 20px;line-height: 20px;
-  
+  height: 20px;
+  line-height: 20px;
   font-size: 12px;
 }
-p.today {
-  margin: 0 auto;
-  width: 20px;
-  background-color: var(--color-primary-7);
-  border-radius: 50%;
-  color: #FFF;
-  font-weight: 700;
+
+/* The whole cell becomes highlighted for today */
+.day-box.today {
+  background: #f5faff;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(59,130,246,0.15) inset;
 }
 
-.not-current {
-  color: #ccc;
-  opacity: 0.6;
+/* keep number readable and slightly stronger on today */
+.day-box.today .day-number {
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+/* out-of-month dates look muted */
+.day-box.not-current .day-number {
+  opacity: 0.4;
+}
+
+/* optional: hover affordance */
+.calendar-cell .day-box {
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.02s;
+}
+
+.calendar-cell .day-box:hover {
+  background: #f8fbff;
 }
 
 .more-needed {
