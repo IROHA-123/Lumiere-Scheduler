@@ -15,7 +15,7 @@
         <td><%= project.title %></td>
         <td>
           <% current_status = @shift_requests[project.id]&.status %>
-          <%= form_with url: scheduler_shift_requests_path,
+          <%= form_with url: staff_shift_requests_path,
                         method: :post,
                         local: true,
                         class: "preference-form" do |f| %>
