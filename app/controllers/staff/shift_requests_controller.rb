@@ -1,5 +1,5 @@
-# app/controllers/scheduler/shift_requests_controller.rb
-class Scheduler::ShiftRequestsController < ApplicationController
+# app/controllers/staff/shift_requests_controller.rb
+class Staff::ShiftRequestsController < ApplicationController
   layout 'scheduler'
   before_action :authenticate_user!
 
@@ -62,11 +62,11 @@ class Scheduler::ShiftRequestsController < ApplicationController
     sr.assign_attributes(status: attrs[:status])
 
     sr.save!
-    redirect_to scheduler_shift_requests_path, notice: "希望を送信しました"
+    redirect_to staff_shift_requests_path, notice: "希望を送信しました"
   rescue ActiveRecord::RecordNotUnique
-    redirect_to scheduler_shift_requests_path, notice: "既に希望を受け付けています"
+    redirect_to staff_shift_requests_path, notice: "既に希望を受け付けています"
   rescue ActiveRecord::RecordInvalid
-    redirect_to scheduler_shift_requests_path, alert: sr.errors.full_messages.to_sentence
+    redirect_to staff_shift_requests_path, alert: sr.errors.full_messages.to_sentence
   end
 
 end
