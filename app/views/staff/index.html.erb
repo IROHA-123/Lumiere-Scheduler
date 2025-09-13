@@ -21,8 +21,10 @@
           
             <!--カレンダー画面 --------------------------------->
             <div class="swiper-slide">
-              <%= render partial: "staff/calendar/calendar_view",
-                          locals: { calendar_days: @calendar_days,projects_by_date: @projects_by_date } %>
+              <div class="calendar-container">
+                <%= render partial: "staff/calendar/calendar_view",
+                            locals: { calendar_days: @calendar_days,projects_by_date: @projects_by_date } %>
+              </div>
             </div>
           
             <!--マイシフト画面 --------------------------------->
