@@ -21,13 +21,13 @@
           
             <!--カレンダー画面 --------------------------------->
             <div class="swiper-slide">
-              <%= render partial: "calendar_view",
+              <%= render partial: "calendar/calendar_view",
                           locals: { calendar_days: @calendar_days,projects_by_date: @projects_by_date } %>
             </div>
           
             <!--マイシフト画面 --------------------------------->
             <div class="swiper-slide">
-              <%= render partial: "my_shifts",
+              <%= render partial: "myshifts/my_shifts",
                           locals: { shift_assignments: @shift_assignments,shift_requests: @shift_requests } %>
             </div>
 
@@ -35,8 +35,8 @@
       </div>
       <!--Swiperここまで -------------------------------------->
 
-      <%= render partial:"modal_projects" %>
-      <%= render partial:"logout_menu" %>
+      <%= render partial:"calendar/modal_projects" %>
+      <%= render partial:"myshifts/logout_menu" %>
 
     </div>
 
