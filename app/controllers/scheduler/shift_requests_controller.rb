@@ -51,7 +51,7 @@ class Scheduler::ShiftRequestsController < ApplicationController
   def modal
     ids      = params[:project_ids].to_s.split(',').map(&:to_i)
     projects = Project.where(id: ids)
-    render partial: "scheduler/shift_requests/modal_body", locals: { projects: projects }
+    render partial: "staff/calendar/modal_body", locals: { projects: projects }
   end
 
   # -- シフト希望送信-------------------------------------------------
