@@ -45,6 +45,8 @@ class Staff::ShiftRequestsController < ApplicationController
       .where.not(project_id: assigned_ids)
       .includes(:project)
       .order('projects.work_date ASC, projects.start_time ASC')
+    
+    render template: 'staff/index'
   end
 
   # -- モーダル表示用アクション----------------------------------------

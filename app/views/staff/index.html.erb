@@ -4,7 +4,7 @@
 
     <header class="header-wrapper">
       <div class="scheduler-header">
-        <h1>Lumière Shift Scheduler</h1>
+        <h1>Lumière Scheduler</h1>
       </div>
       <div  class="tab-nav">
         <div class="nav-item active">カレンダー</div>
@@ -21,13 +21,13 @@
           
             <!--カレンダー画面 --------------------------------->
             <div class="swiper-slide">
-              <%= render partial: "calendar/calendar_view",
+              <%= render partial: "staff/calendar/calendar_view",
                           locals: { calendar_days: @calendar_days,projects_by_date: @projects_by_date } %>
             </div>
           
             <!--マイシフト画面 --------------------------------->
             <div class="swiper-slide">
-              <%= render partial: "myshifts/my_shifts",
+              <%= render partial: "staff/myshifts/my_shifts",
                           locals: { shift_assignments: @shift_assignments,shift_requests: @shift_requests } %>
             </div>
 
@@ -35,8 +35,8 @@
       </div>
       <!--Swiperここまで -------------------------------------->
 
-      <%= render partial:"calendar/modal_projects" %>
-      <%= render partial:"myshifts/logout_menu" %>
+      <%= render partial:"staff/calendar/modal_projects" %>
+      <%= render partial:"staff/myshifts/logout_menu" %>
 
     </div>
 

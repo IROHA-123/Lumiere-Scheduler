@@ -94,6 +94,8 @@
 }
 
 .calendar-caption {
+  font-size: 18px;
+  margin-top: 26px;
   margin-bottom:20px;
   color: var(--color-secondary-6);
 }
