@@ -2,12 +2,15 @@ Rails.application.routes.draw do
   # Devise
   devise_for :users, skip: [:registrations]
 
-  # Root
-  authenticated :user do
-    root "scheduler/shift_requests#index", as: :authenticated_root
-  end
-  unauthenticated :user do
-    root "devise/sessions#new", as: :unauthenticated_root
+  # root は devise_scope で囲む
+  devise_scope :user do
+    authenticated :user do
+      root "scheduler/shift_requests#index", as: :authenticated_root
+    end
+
+    unauthenticated do
+      root "devise/sessions#new", as: :unauthenticated_root
+    end
   end
 
   # スタッフ画面（Shift Scheduler）
