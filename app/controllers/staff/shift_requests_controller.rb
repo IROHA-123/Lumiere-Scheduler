@@ -1,6 +1,6 @@
 # app/controllers/staff/shift_requests_controller.rb
 class Staff::ShiftRequestsController < ApplicationController
-  layout 'scheduler'
+  layout 'staff'
   before_action :authenticate_user!
 
   def index
