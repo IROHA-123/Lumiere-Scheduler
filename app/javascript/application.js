@@ -1,2 +1,2 @@
-import "./turbo.min.js"
+import "@hotwired/turbo-rails"
 import "./controllers"
