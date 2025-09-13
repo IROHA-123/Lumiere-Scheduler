@@ -12,7 +12,7 @@ export default class extends Controller {
     }
     // ——————————————
 
-    fetch(`/scheduler/shift_requests/modal?project_ids=${ids}`)
+    fetch(`/staff/shift_requests/modal?project_ids=${ids}`)
       .then(res => res.text())
       .then(html => {
         this.bodyTarget.innerHTML = html
