@@ -89,6 +89,13 @@
 /* -------------------------------------------------
 　calender
 ------------------------------------------------- */
+.calendar-container {
+  background-color: #fffdf7;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
 .calendar {
   margin: 30px auto;
 }
