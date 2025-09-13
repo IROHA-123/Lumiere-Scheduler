@@ -19,21 +19,19 @@
           <% week.each do |day| %>
             <% if day.present? %>
               <% projects = @projects_by_date[day] || [] %>
-              <td>
+              <td class="calendar-cell">
                 <div
-                  class="day-box"
+                  class="<%= ['day-box',
+                              ('today' if day == Date.current),
+                              ('not-current' if day.month != base_date.month)
+                             ].compact.join(' ') %>"
                   data-action="click->modal#open"
                   data-date="<%= day %>"
                   <% if projects.any? %>
                     data-project-ids="<%= projects.map(&:id).join(',') %>"
                   <% end %>>
-                  
-                  <p class="
-                    <%= 'today'       if day == Date.today %>
-                    <%= 'not-current' if day.month != base_date.month %>
-                  ">
-                    <%= day.day %>
-                  </p>
+
+                  <p class="day-number"><%= day.day %></p>
 
                   <% if projects.any? %>
                     <div class="more-needed"></div>
